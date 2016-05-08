@@ -12,6 +12,10 @@ ItinerarySchema=new SimpleSchema({
   distance: {
     type: Number,
     label: "Distance"
+  },
+  creator:{
+    type:String,
+    regEx: SimpleSchema.RegEx.Id,
   }
 });
 

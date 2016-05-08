@@ -34,7 +34,6 @@ Meteor.startup(() => {
        }
     },
     delete: {
-      roleRequired: ['id', 'name'],
       action: function () {
         if (Itinerary.remove(this.urlParams.id)) {
           return {status: 'success', data: {message: 'Itineray delete'}};
@@ -50,18 +49,34 @@ Meteor.startup(() => {
   Api.addRoute('itinerary',{authRequired:true},{
     post:{
       action:function(){
-        let response="YESSS";
-        Itinerary.insert(this.bodyParams, function(err, result){
-          if(err)
-          response= {
-                    statusCode: 401,
-                    body: {status: 'error', message: 'Erreur '}
-                };
 
-          response= JSON.stringify(result);
+        userId=this.request.headers['x-user-id'];
+        token=this.request.headers['x-auth-token'];
 
+        response={
+          'status':404,
+          'message':'Itinerary not add'
+        };
+
+        //response= Itinerary.insert(this.bodyParams);
+        user=Meteor.users.findOne({_id:"wQcAHTHpHBiXnPQ4T"});
+
+        console.log(user);
+
+        var add=Itinerary.insert({
+          'title':this.bodyParams.title,
+          'distance':this.bodyParams.distance,
+          'creator':userId
 
         });
+
+        if(add){
+          response={
+            'status':200,
+            'message': 'Itinerary add',
+            '_id':add
+          };
+        }
 
         return response;
 
