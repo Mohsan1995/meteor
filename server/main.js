@@ -5,12 +5,11 @@ Meteor.startup(() => {
     useDefaultAuth: true,
     prettyJson: true
   });
-  
- Users = new Mongo.Collection('users');
+
+
  Itinerary = new Mongo.Collection('itinerary');
 
- Api.addCollection(Users);
- 
+
   Api.addCollection(Meteor.users, {
     excludedEndpoints: ['getAll', 'put', 'get', 'post'],
     routeOptions: {
@@ -43,5 +42,4 @@ Meteor.startup(() => {
       }
     }
   });
-}
 });
