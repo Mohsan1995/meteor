@@ -9,21 +9,8 @@ Meteor.startup(() => {
 
  Itinerary = new Mongo.Collection('itinerary');
 
-
-  Api.addCollection(Meteor.users, {
-    excludedEndpoints: ['getAll', 'put', 'get', 'post'],
-    routeOptions: {
-      authRequired: true
-    },
-    endpoints: {
-      post: {
-        authRequired: false
-      },
-      delete: {
-        roleRequired: 'admin'
-      }
-    }
-  });
+  //Create Rou:te for User Collection
+  Api.addCollection(Meteor.users);
 
   Api.addRoute('itinerary/:id', {authRequired: true}, {
     get: function () {
